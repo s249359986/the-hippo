@@ -22,12 +22,13 @@ class Archive{
     });
     if(size){
       let filePromise = [];
-      let content = await this._archiveFormat.compression(todoCompressionList)
+      let content = await this._archiveFormat.compression(todoCompressionList,option)
       let count = 0;
       let len = content.length;
+      let suffix
       for(let i =0;i< len ;i+=size ){
         count +=1;
-        let suffix = (count+'').padStart(3,'0');
+        suffix = (count+'').padStart(3,'0');
         let buf = content.subarray(i,i+size);
         filePromise.push(writeFile(`${option['path']}${option['fileName']}.${this._archiveFormat.getExtension()}.${suffix}`,buf));
       }
@@ -35,11 +36,15 @@ class Archive{
         return {fullFileName: `${option['path']}${option['fileName']}.${this._archiveFormat.getExtension()}.${suffix}`}
       });
     }
-    let content = await this._archiveFormat.compression(todoCompressionList)
+    let content = await this._archiveFormat.compression(todoCompressionList,option)
     const fullFileName = `${option['path']}${option['fileName']}.${this._archiveFormat.getExtension()}`
     return writeFile(fullFileName,content).then(()=>{
       return {fullFileName: fullFileName}
     });
+  }
+
+  onProgress(cb){
+    this._archiveFormat.onProgress(cb)
   }
 
   decompression(){

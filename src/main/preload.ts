@@ -27,7 +27,8 @@ const electronHandler = {
 contextBridge.exposeInMainWorld('electron', electronHandler);
 contextBridge.exposeInMainWorld('electronAPI', {
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
-  compression: (data:any)=> ipcRenderer.send("compression",data)
+  compression: (data:any)=> ipcRenderer.send("compression",data),
+  handleCompression: (callback:any) => ipcRenderer.on('compression', callback)
 })
 
 export type ElectronHandler = typeof electronHandler;

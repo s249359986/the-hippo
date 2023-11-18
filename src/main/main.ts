@@ -163,10 +163,14 @@ app
     }
     console.log("app.getPath('temp')",app.getPath('temp'))
     const formatInstance = formateFactory(type,{outputDir:app.getPath('temp'),archiveName: fileName});
-    let archiveInstance = new Archive(formatInstance).compression(fileList,option);
-    archiveInstance.then((data)=>{
+    let archiveInstance = new Archive(formatInstance)
+    archiveInstance.onProgress((data)=>{
+      mainWindow.webContents.send('compression',{status:'progress',...data})
+    })
+    archiveInstance.compression(fileList,option).then((data)=>{
       if(data && data.fullFileName){
         shell.showItemInFolder(data.fullFileName);
+        mainWindow.webContents.send('compression',{status:'suc'})
       }
       log.info("archiveInstance",data)
     }).catch((err)=>{
