@@ -147,6 +147,23 @@ Become a sponsor and get your logo on our README on Github with a link to your s
 - [C. T. Lin](https://github.com/chentsulin)
 - [Jhen-Jie Hong](https://github.com/jhen0409)
 
+## 编辑 package.json 中相关字段,可以使用其他图标:
+
+```
+"build": {
+  "mac": {
+    "icon": "icons/icon.icns"
+  },
+  "win": {
+    "icon": "icons/icon.ico"
+  },
+  "linux": {
+    "icon": "icons"
+  }
+}
+
+```
+
 ## License
 
 MIT © [Electron React Boilerplate](https://github.com/electron-react-boilerplate)
