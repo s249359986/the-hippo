@@ -12,7 +12,7 @@ import { Z7Format } from './service/Z7Format';
 
 class AppUpdater {
   constructor() {
-    log.info(transports.file.level = 'info');
+    // log.info(transports.file.level = 'info');
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
   }

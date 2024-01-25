@@ -9,6 +9,7 @@ class Archive{
   // method
   async compression(fileList: Array,option){ //option:{size,fileName} - return array
     let size = +option['size'];
+    console.log("!!!--size",size)
     let readFilePromises= []
     fileList.forEach((file)=>{
       readFilePromises.push(readFile(file.path))

@@ -106,7 +106,7 @@ function Index() {
     beforeUpload: (file) => {
       return false;
     },
-    directory: false,
+    directory: true,
     showUploadList: true,
     defaultFileList: defaultFileList,
     fileList: fileList,
@@ -122,12 +122,18 @@ function Index() {
     const { value } = e.target;
     console.log('typeChange', value);
     setTypeChecked(value);
-    pageData.size = packageSizeList[0]['size'];
+    if(isPackage){
+      pageData.size = packageSizeList[0]['size'];
+    }else{
+      pageData.size = 0;
+    }
+    pageData.type = value;
     setIsPackage(false);
     setPageData(pageData);
   };
 
   const handleOk = () => {
+    console.log("handleOk",pageData)
     window.electronAPI.compression({ ...pageData });
     setIsModalOpen(false);
     setProgressModalShow(true)
@@ -142,6 +148,9 @@ function Index() {
     setIsPackage(checked);
     if (checked) {
       pageData.size = packageSize['size'];
+      setPageData(pageData);
+    }else{
+      pageData.size = 0;
       setPageData(pageData);
     }
   };

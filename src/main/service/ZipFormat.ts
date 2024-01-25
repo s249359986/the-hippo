@@ -21,8 +21,10 @@ class ZipFormat{
     fileList.forEach(element => {
       this._zip.file(element.fileName,element.content)
     });
-    this.emitProgress({status:'progress',percent:50})
-    return await this._zip.generateAsync({type:"nodebuffer"})
+    return await this._zip.generateAsync({type:"nodebuffer"},(metadata)=>{
+      console.log("progression: " + metadata.percent.toFixed(2) + " %");
+      this.emitProgress({status:'progress',percent:metadata.percent})
+    })
   }
 
   onProgress(cb){
