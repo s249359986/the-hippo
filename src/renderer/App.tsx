@@ -74,6 +74,14 @@ function Index() {
         pageData.fileName = fileList[0]['name'];
         let tempPath = fileList[0].originFileObj.path;
         pageData.path = tempPath.replace(`${fileList[0]['name']}`, '');
+        
+        // 计算文件总大小
+        let totalSize = 0;
+        fileList.forEach(file => {
+          totalSize += file.size || 0;
+        });
+        pageData.size = totalSize;
+        
         if (fileList.length > 1) {
           let fileNameArr = pageData.fileName.split('.');
           pageData.fileName =
@@ -203,8 +211,11 @@ function Index() {
         cancelText="取消"
         okText="确认"
       >
-        <Form.Item label="文件(大小)">
+        <Form.Item label="文件(名称)">
           {pageData.path}/{pageData.fileName}
+        </Form.Item>
+        <Form.Item label="文件(大小)">
+          {(pageData.size / (1024 * 1024)).toFixed(2)} MB
         </Form.Item>
         <Form.Item label="压缩格式">
           <Radio.Group onChange={typeChange} value={typeChecked}>
